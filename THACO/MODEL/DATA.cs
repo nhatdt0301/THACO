@@ -5,7 +5,7 @@ using System.Text;
 
 namespace THACO.MODE
 {
-    class GETDATA
+    class DATA
     {
         string[] SP  = new string[7]; // COT SAN PHAM
         string[] THN = new string[7]; // COT THUC HIEN (THEO NGAY)
