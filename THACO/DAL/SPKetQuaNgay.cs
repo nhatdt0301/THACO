@@ -5,7 +5,7 @@ using System.Text;
 
 namespace THACO.DAL
 {
-    public class KetQuaNgay
+    public class SPKetQuaNgay
     {
         public int ID {get;set;}
         public int SanPhamID { get; set; }

@@ -21,7 +21,9 @@ namespace THACO
         {
             Service service = new Service();
             DateTime  dt = DateTime.Parse("2015-11-1");
-            dataGridView1.DataSource = service.GetData(dt);
+            List<SPKetQuaNgay> list = service.LayKetQuaNgay(dt);
+
+            dataGridView1.DataSource = list;
         }
     }
 }

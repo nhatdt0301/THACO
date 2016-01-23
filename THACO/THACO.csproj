@@ -49,7 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DAL\KetQuaNgay.cs" />
+    <Compile Include="DAL\SPKetQuaNgay.cs" />
     <Compile Include="DAL\Service.cs" />
     <Compile Include="DAL\THACOModel.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -68,7 +68,7 @@
     <Compile Include="Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
-    <Compile Include="MODEL\DATA.cs" />
+    <Compile Include="MODEL\Results.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
@@ -91,6 +91,7 @@
       <LastGenOutput>THACOModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <None Include="App.Config" />
+    <None Include="Properties\DataSources\THACO.DAL.THACOEntities.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -10,31 +10,44 @@ namespace THACO.DAL
 {
     public class Service
     {
-        public List<KetQuaNgay> LayKetQuaNgay(DateTime datetime)
+        public List<SPKetQuaNgay> LayKetQuaNgay(DateTime datetime)
         {
             DataTable table = GetData(datetime);
-            var List = new List<KetQuaNgay>(table.Rows.Count);
+            var List = new List<SPKetQuaNgay>(table.Rows.Count);
             foreach (DataRow row in table.Rows)
             {
                 var values = row.ItemArray;
-                var KetQuaNgay = new KetQuaNgay()
+                var KetQuaNgay = new SPKetQuaNgay()
                 {
                     ID =int.Parse(values[0].ToString()),
                     SanPhamID = int.Parse(values[1].ToString()),
-                    MaSanPham = values[1].ToString(),
-                    TenLoaiSP = values[1].ToString(),
-                    LoaiSPID = int.Parse(values[1].ToString()),
-                    MaLoaiSP = values[1].ToString(),
-                    TenSanPham = values[1].ToString(),
-                    KeHoachNgay = int.Parse(values[1].ToString()),
-                    ThucHienNgay = int.Parse(values[1].ToString()),
-                    ChenhLech = int.Parse(values[1].ToString()),
-                    KeHoachThang = int.Parse(values[1].ToString()),
-                    KetQuaThang = int.Parse(values[1].ToString())
+                    MaSanPham = values[2].ToString(),
+                    TenSanPham = values[3].ToString(),
+                    LoaiSPID = int.Parse(values[4].ToString()),
+                    MaLoaiSP = values[5].ToString(),
+                    TenLoaiSP = values[6].ToString(),
+                    KeHoachNgay = int.Parse(values[7].ToString()),
+                    ThucHienNgay = int.Parse(values[8].ToString()),
+                    ChenhLech = int.Parse(values[9].ToString()),
+                    KeHoachThang = int.Parse(values[10].ToString()),
+                    KetQuaThang = changeInt(values[11].ToString())
                 };
                 List.Add(KetQuaNgay);
             }
             return List;
+        }
+
+        public int changeInt(string s) {
+            int a = 0;
+            try
+            {
+                a = int.Parse(s);
+            }
+            catch { 
+            
+            }
+            return a;
+
         }
 
         public DataTable GetData(DateTime datetime) {
