@@ -90,10 +90,12 @@ namespace THACO.MODE
         public Results(DateTime NSX)
         {
             List<SPKetQuaNgay> list = updateList(NSX);
-            if (list == null) throw new ArgumentNullException();
-            KQN = list;
             NgaySX = NSX;
             vitrisps = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+        }
+
+        public int ViTriSP(int combobox) {
+            return vitrisps[combobox];
         }
 
         public void change(int vitricbb, int vitrisp)
@@ -106,15 +108,19 @@ namespace THACO.MODE
             Service service = new Service();
             List<SPKetQuaNgay> list = service.LayKetQuaNgay(NSX);
             list.Insert(0, new SPKetQuaNgay() { TenSanPham = "---Select---" });
+            if (list == null) throw new ArgumentNullException();
+            KQN = list;
             return list;
 
         }
-        public bool isSelected(int p)
+        public int cbbIndex(int p)
         {
-            foreach (var i in vitrisps) {
-                if (p == i) return true;
+            for (int i = 0; i < vitrisps.Length; i++)
+            {
+                if (p == vitrisps[i]) return i;
             }
-            return false;
+                
+            return -1;
         }
     }
 }

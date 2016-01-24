@@ -16,7 +16,9 @@ namespace THACO
     {
         Results results;
         int prevSelected = -1;
+        bool autoupdate
 
+;
         public Form1()
         {
             InitializeComponent();
@@ -38,16 +40,17 @@ namespace THACO
             string NSXstring = TB_NSX.Text;
             try {
                 DateTime NSX = DateTime.Parse(NSXstring);
-                results = new Results(NSX);
-                var list=results.KQN;
+                try {
+                    results = new Results(NSX);
+                    var list = results.KQN;
+                }
+                catch {
+                    MessageBox.Show("Loi Ket Noi CSDL");
+                    return;
+                }
                 
-                CB_SP1.DataSource = new BindingSource(list, "");
-                CB_SP2.DataSource = new BindingSource(list, "");
-                CB_SP3.DataSource = new BindingSource(list, "");
-                CB_SP4.DataSource = new BindingSource(list, "");
-                CB_SP5.DataSource = new BindingSource(list, "");
-                CB_SP6.DataSource = new BindingSource(list, "");
-                CB_SP7.DataSource = new BindingSource(list, "");
+                updateData();
+                //selected item
                 CB_SP1.Enter += cbb_enter;
                 CB_SP2.Enter += cbb_enter;
                 CB_SP3.Enter += cbb_enter;
@@ -63,6 +66,7 @@ namespace THACO
             }
             catch {
                 MessageBox.Show("Nhập Ngày Hợp Lệ");
+                return;
             }
             
             
@@ -72,14 +76,14 @@ namespace THACO
         {
             
             var cbb = sender as ComboBox;
-            if (cbb.SelectedIndex!=0&&results.isSelected(cbb.SelectedIndex))
+            if (cbb.SelectedIndex!=0&&results.cbbIndex(cbb.SelectedIndex)!=-1&&(int)cbb.Tag!=results.cbbIndex(cbb.SelectedIndex))
             {
                 MessageBox.Show("Da chon");
                 cbb.SelectedIndex = 0;
                 return;
             }
             //
-            ChangeData(cbb);
+            ChangeDataSelected(cbb);
         }
 
         private void cbb_enter(object sender, EventArgs e)
@@ -121,25 +125,71 @@ namespace THACO
 
         private void TIMER2_Tick(object sender, EventArgs e)
         {
-            results.updateList(results.NgaySX);
-            ChangeData(CB_SP1);
-            ChangeData(CB_SP2);
-            ChangeData(CB_SP3);
-            ChangeData(CB_SP4);
-            ChangeData(CB_SP5);
-            ChangeData(CB_SP6);
-            ChangeData(CB_SP7);
-            COM.Write("+" + CB_SP1.Text  + "@" + CB_SP2.Text  + "#" + CB_SP3.Text  + "$" + CB_SP4.Text  + "%" + CB_SP5.Text  + "^" + CB_SP6.Text  + "&" + CB_SP7.Text  + "*" +
-                      "-" + TB_THN1.Text + "A" + TB_THN2.Text + "B" + TB_THN3.Text + "C" + TB_THN4.Text + "D" + TB_THN5.Text + "E" + TB_THN6.Text + "F" + TB_THN7.Text + "G" + TB_TTHN.Text + "H" + 
-                            TB_TKHN.Text + "I" + TB_KHN7.Text + "J" + TB_KHN6.Text + "K" + TB_KHN5.Text + "L" + TB_KHN4.Text + "M" + TB_KHN3.Text + "N" + TB_KHN2.Text + "O" + TB_KHN1.Text + "P" + 
-                            TB_THT1.Text + "a" + TB_THT2.Text + "b" + TB_THT3.Text + "c" + TB_THT4.Text + "d" + TB_THT5.Text + "e" + TB_THT6.Text + "f" + TB_THT7.Text + "g" + TB_TTHT.Text + "h" + 
-                            TB_TKHT.Text + "i" + TB_KHT7.Text + "j" + TB_KHT6.Text + "k" + TB_KHT5.Text + "l" + TB_KHT4.Text + "m" + TB_KHT3.Text + "n" + TB_KHT2.Text + "o" + TB_KHT1.Text + "p" + 
-                            DateTime.Now.Month + "Q" + DateTime.Now.Second + "R" + DateTime.Now.Minute + "S" + DateTime.Now.Hour + "T" + DateTime.Now.Month + "U" + DateTime.Now.Day+ "V");
+
+            updateData();
+            COM.Write("+" + CB_SP1.Text + "@" + CB_SP2.Text + "#" + CB_SP3.Text + "$" + CB_SP4.Text + "%" + CB_SP5.Text + "^" + CB_SP6.Text + "&" + CB_SP7.Text + "*" +
+                      "-" + TB_THN1.Text + "A" + TB_THN2.Text + "B" + TB_THN3.Text + "C" + TB_THN4.Text + "D" + TB_THN5.Text + "E" + TB_THN6.Text + "F" + TB_THN7.Text + "G" + TB_TTHN.Text + "H" +
+                            TB_TKHN.Text + "I" + TB_KHN7.Text + "J" + TB_KHN6.Text + "K" + TB_KHN5.Text + "L" + TB_KHN4.Text + "M" + TB_KHN3.Text + "N" + TB_KHN2.Text + "O" + TB_KHN1.Text + "P" +
+                            TB_THT1.Text + "a" + TB_THT2.Text + "b" + TB_THT3.Text + "c" + TB_THT4.Text + "d" + TB_THT5.Text + "e" + TB_THT6.Text + "f" + TB_THT7.Text + "g" + TB_TTHT.Text + "h" +
+                            TB_TKHT.Text + "i" + TB_KHT7.Text + "j" + TB_KHT6.Text + "k" + TB_KHT5.Text + "l" + TB_KHT4.Text + "m" + TB_KHT3.Text + "n" + TB_KHT2.Text + "o" + TB_KHT1.Text + "p" +
+                            DateTime.Now.Month + "Q" + DateTime.Now.Second + "R" + DateTime.Now.Minute + "S" + DateTime.Now.Hour + "T" + DateTime.Now.Month + "U" + DateTime.Now.Day + "V");
+        }
+        public void updateData()
+        {
+            var list = results.updateList(results.NgaySX);
+            autoupdate = true;
+            CB_SP1.DataSource = new BindingSource(list, "");
+
+
+            CB_SP2.DataSource = new BindingSource(list, "");
+
+
+            CB_SP3.DataSource = new BindingSource(list, "");
+
+            CB_SP4.DataSource = new BindingSource(list, "");
+
+            CB_SP5.DataSource = new BindingSource(list, "");
+
+            CB_SP6.DataSource = new BindingSource(list, "");
+
+            CB_SP7.DataSource = new BindingSource(list, "");
+            autoupdate = false;
+
+            ChangeDataUpdated(CB_SP1);
+
+            ChangeDataUpdated(CB_SP2);
+
+            ChangeDataUpdated(CB_SP3);
+
+            ChangeDataUpdated(CB_SP4);
+
+            ChangeDataUpdated(CB_SP5);
+
+            ChangeDataUpdated(CB_SP6);
+
+            ChangeDataUpdated(CB_SP7);
+            
+        }
+        public void ChangeDataUpdated(ComboBox cbb)
+        {
+            var cbbIndex = (int)cbb.Tag;
+            cbb.SelectedIndex = results.ViTriSP(cbbIndex);
+            ChangeData(cbb);
         }
 
-        public void ChangeData(ComboBox cbb) {
-            SPKetQuaNgay sp = cbb.SelectedItem as SPKetQuaNgay;
+        public void ChangeDataSelected(ComboBox cbb)
+        {
+            if (autoupdate) return;  
             var cbbIndex = (int)cbb.Tag;
+            results.change(cbbIndex, cbb.SelectedIndex);
+            ChangeData(cbb);
+           
+        }
+
+        public void ChangeData(ComboBox cbb){
+            var cbbIndex = (int)cbb.Tag;
+            SPKetQuaNgay sp = cbb.SelectedItem as SPKetQuaNgay;
+            # region swtich
             switch (cbbIndex)
             {
                 case 0:
@@ -186,12 +236,15 @@ namespace THACO
                     break;
                 default: return;
             }
-            results.change(cbbIndex, cbb.SelectedIndex);
+            #endregion swtich
+
             TB_TTHN.Text = results.TongThucHienNgay.ToString();
             TB_TKHN.Text = results.TongKeHoachNgay.ToString();
             TB_TTHT.Text = results.TongThucHienThang.ToString();
             TB_TKHT.Text = results.TongKeHoachThang.ToString();
         }
+
+
 
 
     }

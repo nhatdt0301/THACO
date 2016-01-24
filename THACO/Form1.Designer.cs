@@ -34,7 +34,6 @@
             this.TIMER2 = new System.Windows.Forms.Timer(this.components);
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label10 = new System.Windows.Forms.Label();
             this.BT_CONNECT = new System.Windows.Forms.Button();
             this.LISTCOM = new System.Windows.Forms.ComboBox();
@@ -90,6 +89,7 @@
             this.CB_SP3 = new System.Windows.Forms.ComboBox();
             this.CB_SP2 = new System.Windows.Forms.ComboBox();
             this.CB_SP1 = new System.Windows.Forms.ComboBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -123,6 +123,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.AutoScroll = true;
             this.tabPage1.Controls.Add(this.label10);
             this.tabPage1.Controls.Add(this.BT_CONNECT);
             this.tabPage1.Controls.Add(this.LISTCOM);
@@ -185,17 +186,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Bảng Hiển Thị";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.dataGridView1);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(780, 460);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Dữ Liệu";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // label10
             // 
@@ -660,6 +650,17 @@
             this.CB_SP1.TabIndex = 55;
             this.CB_SP1.Tag = 0;
             this.CB_SP1.SelectedIndexChanged += new System.EventHandler(this.comboBoxSP_SelectedIndexChanged);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(780, 460);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Dữ Liệu";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 

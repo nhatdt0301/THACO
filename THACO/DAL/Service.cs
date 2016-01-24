@@ -19,17 +19,17 @@ namespace THACO.DAL
                 var values = row.ItemArray;
                 var KetQuaNgay = new SPKetQuaNgay()
                 {
-                    ID =int.Parse(values[0].ToString()),
-                    SanPhamID = int.Parse(values[1].ToString()),
+                    ID = changeInt(values[0].ToString()),
+                    SanPhamID = changeInt(values[1].ToString()),
                     MaSanPham = values[2].ToString(),
                     TenSanPham = values[3].ToString(),
-                    LoaiSPID = int.Parse(values[4].ToString()),
+                    LoaiSPID = changeInt(values[4].ToString()),
                     MaLoaiSP = values[5].ToString(),
                     TenLoaiSP = values[6].ToString(),
-                    KeHoachNgay = int.Parse(values[7].ToString()),
-                    ThucHienNgay = int.Parse(values[8].ToString()),
-                    ChenhLech = int.Parse(values[9].ToString()),
-                    KeHoachThang = int.Parse(values[10].ToString()),
+                    KeHoachNgay = changeInt(values[7].ToString()),
+                    ThucHienNgay = changeInt(values[8].ToString()),
+                    ChenhLech = changeInt(values[9].ToString()),
+                    KeHoachThang = changeInt(values[10].ToString()),
                     KetQuaThang = changeInt(values[11].ToString())
                 };
                 List.Add(KetQuaNgay);
