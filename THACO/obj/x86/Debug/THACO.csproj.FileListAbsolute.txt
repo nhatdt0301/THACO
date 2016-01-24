@@ -9,3 +9,12 @@ E:\bon\THACO\THACO\bin\Debug\THACO.pdb
 E:\bon\THACO\THACO\obj\x86\Debug\THACO.Form2.resources
 E:\bon\THACO\THACO\obj\x86\Debug\THACO.exe
 E:\bon\THACO\THACO\obj\x86\Debug\THACO.pdb
+E:\5. WORK\THACO\New folder\THACO\THACO\bin\Debug\THACO.exe.config
+E:\5. WORK\THACO\New folder\THACO\THACO\obj\x86\Debug\THACO.exe
+E:\5. WORK\THACO\New folder\THACO\THACO\obj\x86\Debug\THACO.pdb
+E:\5. WORK\THACO\New folder\THACO\THACO\bin\Debug\THACO.exe
+E:\5. WORK\THACO\New folder\THACO\THACO\bin\Debug\THACO.pdb
+E:\5. WORK\THACO\New folder\THACO\THACO\obj\x86\Debug\THACO.Form1.resources
+E:\5. WORK\THACO\New folder\THACO\THACO\obj\x86\Debug\THACO.Form2.resources
+E:\5. WORK\THACO\New folder\THACO\THACO\obj\x86\Debug\THACO.Properties.Resources.resources
+E:\5. WORK\THACO\New folder\THACO\THACO\obj\x86\Debug\THACO.csproj.GenerateResource.Cache

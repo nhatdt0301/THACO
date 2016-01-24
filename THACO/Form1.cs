@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.IO.Ports;
 using THACO.MODE;
 using THACO.DAL;
 
@@ -15,15 +16,16 @@ namespace THACO
     {
         Results results;
         int prevSelected = -1;
+
         public Form1()
         {
             InitializeComponent();
-            
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            string[] ports = SerialPort.GetPortNames();
+            LISTCOM.Items.AddRange(ports);
         }
 
         private void textBox_NSX_TextChanged(object sender, EventArgs e)
@@ -31,101 +33,41 @@ namespace THACO
            
         }
 
-        private void button_GetData_Click(object sender, EventArgs e)
+        private void button_GetData_Click(object sender, EventArgs e) // DUA VAO TIMER2
         {
-            string NSXstring = textBox_NSX.Text;
+            string NSXstring = TB_NSX.Text;
             try {
                 DateTime NSX = DateTime.Parse(NSXstring);
                 results = new Results(NSX);
                 var list=results.KQN;
                 
-                comboBox_sp1.DataSource = new BindingSource(list, "");
-                comboBox2.DataSource = new BindingSource(list, "");
-                comboBox3.DataSource = new BindingSource(list, "");
-                comboBox4.DataSource = new BindingSource(list, "");
-                comboBox5.DataSource = new BindingSource(list, "");
-                comboBox6.DataSource = new BindingSource(list, "");
-                comboBox7.DataSource = new BindingSource(list, "");
-                comboBox_sp1.Enter += cbb_enter;
-                comboBox2.Enter += cbb_enter;
-                comboBox3.Enter += cbb_enter;
-                comboBox4.Enter += cbb_enter;
-                comboBox5.Enter += cbb_enter;
-                comboBox6.Enter += cbb_enter;
-                comboBox7.Enter += cbb_enter;
-               
+                CB_SP1.DataSource = new BindingSource(list, "");
+                CB_SP2.DataSource = new BindingSource(list, "");
+                CB_SP3.DataSource = new BindingSource(list, "");
+                CB_SP4.DataSource = new BindingSource(list, "");
+                CB_SP5.DataSource = new BindingSource(list, "");
+                CB_SP6.DataSource = new BindingSource(list, "");
+                CB_SP7.DataSource = new BindingSource(list, "");
+                CB_SP1.Enter += cbb_enter;
+                CB_SP2.Enter += cbb_enter;
+                CB_SP3.Enter += cbb_enter;
+                CB_SP4.Enter += cbb_enter;
+                CB_SP5.Enter += cbb_enter;
+                CB_SP6.Enter += cbb_enter;
+                CB_SP7.Enter += cbb_enter;
+
+                //hien thi datagridview
+                Service s = new Service();
+                var list2 = s.LayKetQuaNgay(NSX);
+                dataGridView1.DataSource = new BindingSource(list2, "");
             }
             catch {
-                MessageBox.Show("Nhap ngay Hop le");
+                MessageBox.Show("Nhập Ngày Hợp Lệ");
             }
             
             
         }
 
-        private void comboBox_sp1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SPKetQuaNgay sp = (SPKetQuaNgay)comboBox_sp1.SelectedItem;
-            textBox_THN1.Text = sp.ThucHienNgay.ToString();
-            textBox_KHN1.Text = sp.KeHoachNgay.ToString();
-            textBox_THT1.Text = sp.KetQuaThang.ToString();
-            textBox_KHT1.Text = sp.KeHoachThang.ToString();
-
-            results.change(0, comboBox_sp1.SelectedIndex-1);
-        }
-
-        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SPKetQuaNgay sp = (SPKetQuaNgay)comboBox2.SelectedItem;
-            textBox_THN2.Text = sp.ThucHienNgay.ToString();
-            textBox_KHN2.Text = sp.KeHoachNgay.ToString();
-            textBox_THT2.Text = sp.KetQuaThang.ToString();
-            textBox_KHT2.Text = sp.KeHoachThang.ToString();
-        }
-
-        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SPKetQuaNgay sp = (SPKetQuaNgay)comboBox3.SelectedItem;
-            textBox_THN3.Text = sp.ThucHienNgay.ToString();
-            textBox_KHN3.Text = sp.KeHoachNgay.ToString();
-            textBox_THT3.Text = sp.KetQuaThang.ToString();
-            textBox_KHT3.Text = sp.KeHoachThang.ToString();
-        }
-
-        private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SPKetQuaNgay sp = (SPKetQuaNgay)comboBox4.SelectedItem;
-            textBox_THN4.Text = sp.ThucHienNgay.ToString();
-            textBox_KHN4.Text = sp.KeHoachNgay.ToString();
-            textBox_THT4.Text = sp.KetQuaThang.ToString();
-            textBox_KHT4.Text = sp.KeHoachThang.ToString();
-        }
-
-        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SPKetQuaNgay sp = (SPKetQuaNgay)comboBox5.SelectedItem;
-            textBox_THN5.Text = sp.ThucHienNgay.ToString();
-            textBox_KHN5.Text = sp.KeHoachNgay.ToString();
-            textBox_THT5.Text = sp.KetQuaThang.ToString();
-            textBox_KHT5.Text = sp.KeHoachThang.ToString();
-        }
-
-        private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SPKetQuaNgay sp = (SPKetQuaNgay)comboBox6.SelectedItem;
-            textBox_THN6.Text = sp.ThucHienNgay.ToString();
-            textBox_KHN6.Text = sp.KeHoachNgay.ToString();
-            textBox_THT6.Text = sp.KetQuaThang.ToString();
-            textBox_KHT6.Text = sp.KeHoachThang.ToString();
-        }
-
-        private void comboBox7_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            SPKetQuaNgay sp = (SPKetQuaNgay)comboBox7.SelectedItem;
-            textBox_THN7.Text = sp.ThucHienNgay.ToString();
-            textBox_KHN7.Text = sp.KeHoachNgay.ToString();
-            textBox_THT7.Text = sp.KetQuaThang.ToString();
-            textBox_KHT7.Text = sp.KeHoachThang.ToString();
-        }
         private void comboBoxSP_SelectedIndexChanged(object sender, EventArgs e)
         {
             
@@ -136,64 +78,119 @@ namespace THACO
                 cbb.SelectedIndex = 0;
                 return;
             }
-            SPKetQuaNgay sp = cbb.SelectedItem as SPKetQuaNgay;
-            var cbbIndex = (int)cbb.Tag;
-            switch (cbbIndex) {
-                case 0: 
-                    textBox_THN1.Text = sp.ThucHienNgay.ToString();
-                    textBox_KHN1.Text = sp.KeHoachNgay.ToString();
-                    textBox_THT1.Text = sp.KetQuaThang.ToString();
-                    textBox_KHT1.Text = sp.KeHoachThang.ToString();
-                    break;
-                case 1:
-                    textBox_THN2.Text = sp.ThucHienNgay.ToString();
-                    textBox_KHN2.Text = sp.KeHoachNgay.ToString();
-                    textBox_THT2.Text = sp.KetQuaThang.ToString();
-                    textBox_KHT2.Text = sp.KeHoachThang.ToString();
-                    break;
-                case 2:
-                    textBox_THN3.Text = sp.ThucHienNgay.ToString();
-                    textBox_KHN3.Text = sp.KeHoachNgay.ToString();
-                    textBox_THT3.Text = sp.KetQuaThang.ToString();
-                    textBox_KHT3.Text = sp.KeHoachThang.ToString();
-                    break;
-                case 3:
-                    textBox_THN4.Text = sp.ThucHienNgay.ToString();
-                    textBox_KHN4.Text = sp.KeHoachNgay.ToString();
-                    textBox_THT4.Text = sp.KetQuaThang.ToString();
-                    textBox_KHT4.Text = sp.KeHoachThang.ToString();
-                    break;
-                case 4:
-                    textBox_THN5.Text = sp.ThucHienNgay.ToString();
-                    textBox_KHN5.Text = sp.KeHoachNgay.ToString();
-                    textBox_THT5.Text = sp.KetQuaThang.ToString();
-                    textBox_KHT5.Text = sp.KeHoachThang.ToString();
-                    break;
-                case 5:
-                    textBox_THN6.Text = sp.ThucHienNgay.ToString();
-                    textBox_KHN6.Text = sp.KeHoachNgay.ToString();
-                    textBox_THT6.Text = sp.KetQuaThang.ToString();
-                    textBox_KHT6.Text = sp.KeHoachThang.ToString();
-                    break;
-                case 6:
-                    textBox_THN7.Text = sp.ThucHienNgay.ToString();
-                    textBox_KHN7.Text = sp.KeHoachNgay.ToString();
-                    textBox_THT7.Text = sp.KetQuaThang.ToString();
-                    textBox_KHT7.Text = sp.KeHoachThang.ToString();
-                    break;
-                default: return;                    
-            }
-            results.change(cbbIndex, cbb.SelectedIndex);
-            textBox_TTHN.Text = results.TongThucHienNgay.ToString();
-            textBox_TKHN.Text = results.TongKeHoachNgay.ToString();
-            textBox_TTHT.Text = results.TongThucHienThang.ToString();
-            textBox_TKHT.Text = results.TongKeHoachThang.ToString();
+            //
+            ChangeData(cbb);
         }
 
         private void cbb_enter(object sender, EventArgs e)
         {
             var cbb=sender as ComboBox;
             prevSelected = cbb.SelectedIndex;
+        }
+
+        private void BT_CONNECT_Click(object sender, EventArgs e)
+        {
+            if (BT_CONNECT.Text == "KẾT NỐI")
+            {
+                COM.PortName = LISTCOM.Text;
+                COM.Open();
+                TIMER1.Enabled = true;
+                TIMER2.Enabled = true;
+                BT_CONNECT.Text = "NGẮT KẾT NỐI";
+            }
+            else
+            {
+                try
+                {
+                    COM.Close();
+                    TIMER1.Enabled = false;
+                    TIMER2.Enabled = false;
+                    BT_CONNECT.Text = "KẾT NỐI";
+                }
+                catch
+                { return; }
+            }
+        }
+
+        private void TIMER1_Tick(object sender, EventArgs e)
+        {
+            //textBox_NSX.Text = DateTime.Now.Hour + " : " + DateTime.Now.Minute + " : " + DateTime.Now.Second;
+            TB_NSX2.Text = DateTime.Now.Day + " / " + DateTime.Now.Month;
+            TB_LKT.Text = DateTime.Now.Month + " ";
+        }
+
+        private void TIMER2_Tick(object sender, EventArgs e)
+        {
+            results.updateList(results.NgaySX);
+            ChangeData(CB_SP1);
+            ChangeData(CB_SP2);
+            ChangeData(CB_SP3);
+            ChangeData(CB_SP4);
+            ChangeData(CB_SP5);
+            ChangeData(CB_SP6);
+            ChangeData(CB_SP7);
+            COM.Write("+" + CB_SP1.Text  + "@" + CB_SP2.Text  + "#" + CB_SP3.Text  + "$" + CB_SP4.Text  + "%" + CB_SP5.Text  + "^" + CB_SP6.Text  + "&" + CB_SP7.Text  + "*" +
+                      "-" + TB_THN1.Text + "A" + TB_THN2.Text + "B" + TB_THN3.Text + "C" + TB_THN4.Text + "D" + TB_THN5.Text + "E" + TB_THN6.Text + "F" + TB_THN7.Text + "G" + TB_TTHN.Text + "H" + 
+                            TB_TKHN.Text + "I" + TB_KHN7.Text + "J" + TB_KHN6.Text + "K" + TB_KHN5.Text + "L" + TB_KHN4.Text + "M" + TB_KHN3.Text + "N" + TB_KHN2.Text + "O" + TB_KHN1.Text + "P" + 
+                            TB_THT1.Text + "a" + TB_THT2.Text + "b" + TB_THT3.Text + "c" + TB_THT4.Text + "d" + TB_THT5.Text + "e" + TB_THT6.Text + "f" + TB_THT7.Text + "g" + TB_TTHT.Text + "h" + 
+                            TB_TKHT.Text + "i" + TB_KHT7.Text + "j" + TB_KHT6.Text + "k" + TB_KHT5.Text + "l" + TB_KHT4.Text + "m" + TB_KHT3.Text + "n" + TB_KHT2.Text + "o" + TB_KHT1.Text + "p" + 
+                            DateTime.Now.Month + "Q" + DateTime.Now.Second + "R" + DateTime.Now.Minute + "S" + DateTime.Now.Hour + "T" + DateTime.Now.Month + "U" + DateTime.Now.Day+ "V");
+        }
+
+        public void ChangeData(ComboBox cbb) {
+            SPKetQuaNgay sp = cbb.SelectedItem as SPKetQuaNgay;
+            var cbbIndex = (int)cbb.Tag;
+            switch (cbbIndex)
+            {
+                case 0:
+                    TB_THN1.Text = sp.ThucHienNgay.ToString();
+                    TB_KHN1.Text = sp.KeHoachNgay.ToString();
+                    TB_THT1.Text = sp.KetQuaThang.ToString();
+                    TB_KHT1.Text = sp.KeHoachThang.ToString();
+                    break;
+                case 1:
+                    TB_THN2.Text = sp.ThucHienNgay.ToString();
+                    TB_KHN2.Text = sp.KeHoachNgay.ToString();
+                    TB_THT2.Text = sp.KetQuaThang.ToString();
+                    TB_KHT2.Text = sp.KeHoachThang.ToString();
+                    break;
+                case 2:
+                    TB_THN3.Text = sp.ThucHienNgay.ToString();
+                    TB_KHN3.Text = sp.KeHoachNgay.ToString();
+                    TB_THT3.Text = sp.KetQuaThang.ToString();
+                    TB_KHT3.Text = sp.KeHoachThang.ToString();
+                    break;
+                case 3:
+                    TB_THN4.Text = sp.ThucHienNgay.ToString();
+                    TB_KHN4.Text = sp.KeHoachNgay.ToString();
+                    TB_THT4.Text = sp.KetQuaThang.ToString();
+                    TB_KHT4.Text = sp.KeHoachThang.ToString();
+                    break;
+                case 4:
+                    TB_THN5.Text = sp.ThucHienNgay.ToString();
+                    TB_KHN5.Text = sp.KeHoachNgay.ToString();
+                    TB_THT5.Text = sp.KetQuaThang.ToString();
+                    TB_KHT5.Text = sp.KeHoachThang.ToString();
+                    break;
+                case 5:
+                    TB_THN6.Text = sp.ThucHienNgay.ToString();
+                    TB_KHN6.Text = sp.KeHoachNgay.ToString();
+                    TB_THT6.Text = sp.KetQuaThang.ToString();
+                    TB_KHT6.Text = sp.KeHoachThang.ToString();
+                    break;
+                case 6:
+                    TB_THN7.Text = sp.ThucHienNgay.ToString();
+                    TB_KHN7.Text = sp.KeHoachNgay.ToString();
+                    TB_THT7.Text = sp.KetQuaThang.ToString();
+                    TB_KHT7.Text = sp.KeHoachThang.ToString();
+                    break;
+                default: return;
+            }
+            results.change(cbbIndex, cbb.SelectedIndex);
+            TB_TTHN.Text = results.TongThucHienNgay.ToString();
+            TB_TKHN.Text = results.TongKeHoachNgay.ToString();
+            TB_TTHT.Text = results.TongThucHienThang.ToString();
+            TB_TKHT.Text = results.TongKeHoachThang.ToString();
         }
 
 
